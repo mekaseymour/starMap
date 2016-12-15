@@ -1,135 +1,134 @@
 <!DOCTYPE html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- This is the corresponding "starter code" for 07_Markers/Infowindows in Udacity and Google's Maps
+API Course, Lesson 1 -->
+<html>
+ <head>
 
-<html lang="en">
-  <head>
-    <!-- so the browser knows the character set used in the page and displays is correctly: -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <title>TravelList</title>
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/static/css/bootstrap.min.css/" rel="stylesheet">
+ <!-- styles put here, but you can include a CSS file and reference it instead! -->
+   <style type="text/css">
+     html, body { height: 100%; margin: 0; padding: 0; }
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
-
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
-    <style>
-      #map {
-        height: 500px;
-        width: 100%;
-       }
-      #top-div {
-        text-align: center;
-        float: left;
-        margin-top: 20px;
-        margin-bottom: 30px;
-      }
-      #title {
-        font-family: 'Lato', sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-
-      <div class="row">
-        <div id="top-div" class="col-lg-12 text-center">
-          <div class="col-lg-12 text-center">
-            <h2 id="title">TravelList</h2>
-          </div>
-          <form name="enterPlace" onsubmit="return getLat()">
-            <input type="text" placeholder="city" name="lat"></input>
-            <input id="btn" type="button" value="add"></input>
-          </form>
-          <p id="test"></p>
+     #main {
+       width: 95%;
+     }
+     #map {
+       height: 100%;
+       width: 95%;
+       margin-left: auto;
+       margin-right: auto;
+     }
+     input[type=button] {
+       border-radius:20px;
+       border: none;
+     }
+     #options-box {
+       padding: 15px;
+     }
+     #buttons-box {
+       width: auto;
+     }
+   </style>
+ </head>
+ <body>
+   <div id="main">
+     <div class="row" id="options-box">
+       <div class="col-md-5"></div>
+       <div class="col-md-7" id="buttons-box">
+         <input id="show-listings" type="button" value="Show Listings">
+         <input id="hide-listings" type="button" value="Hide Listings">
        </div>
      </div>
-     <!-- /.row -->
-     <div class="row">
-       <div class="col-lg-12 text-center">
-         <div id="map"></div>
-       </div>
-     </div>
-     <!-- /.row -->
+   </div>
 
-    </div>
-    <!-- /.container -->
-    <script>
-      function initMap() {
+    <div id="map"></div>
 
-        // store form input into variable
-/*
-        function getLat() {
-          var lat = document.forms['enterplace']['lat'].value;
-          document.getElementById('test').innerHTML="<p id="test">"+ lat +"</p>";
-        }
-*/
-
-        //var city = document.getElementsByName("city")[0].value;
-        //var country = document.getElementsByName("country")[0].value;
-        var uluru = {lat: 31.205753, lng: 29.924526};
-
-        // Constructor creates map
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 6,
-          center: uluru,
-          mapTypeId: 'terrain'
-        });
-
-        // constructor creates marker
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-          title: 'First Marker'
-        });
-
-        // Function for adding a marker to the page.
-        function addMarker(location) {
-          marker = new google.maps.Marker({
-            position: location,
-            map: map
-          });
-        }
-
-        /*
-        // Display multiple markers on a map
-        var infoWindow = new google.maps.InfoWindow(), marker, i;
-
-        // Loop through our array of markers & place each one on the map
-        for( i = 0; i < markers.length; i++ ) {
-          var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-          bounds.extend(position);
-          marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            title: markers[i][0]
+   <script>
+     var map;
+     // Create a new blank array for all the listing markers.
+     var markers = [];
+     function initMap() {
+       // Constructor creates a new map - only center and zoom are required.
+       map = new google.maps.Map(document.getElementById('map'), {
+         center: {lat: 40.7413549, lng: -73.9980244},
+         zoom: 11,
+         mapTypeControl: false
        });
-        */
-
-        // create new info window instance
-        var infowindow = new google.maps.InfoWindow({
-          content: 'Do you ever feel like an InfoWindow, floating in the wind' + 'ready to start again?'
-        });
-        //the InfoWindow won't open automatically (unlike the marker)
-        // we need to add an event listener
-        marker.addListener('click', function(){
-          //function is only called when we click on the marker
-          infowindow.open(map, marker);
-          //calling the infowindow.open method, passing in the map on which
-          //to open and, optionally, the marker on which to anchor it
-        })
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiQUibtZZtp2HMDo3GcmfWxYS5E43QXU4&callback=initMap">
-    </script>
-  </body>
+       // These are the real estate listings that will be shown to the user.
+       // Normally we'd have these in a database instead.
+       var locations = [
+         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}},
+         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}},
+         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}},
+         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}},
+         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}},
+         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}},
+         {title: 'Jay Z', location: {lat: 40.6782, lng: -73.9442}}
+       ];
+       var largeInfowindow = new google.maps.InfoWindow();
+       // The following group uses the location array to create an array of markers on initialize.
+       for (var i = 0; i < locations.length; i++) {
+         // Get the position from the location array.
+         var position = locations[i].location;
+         var title = locations[i].title;
+         // Create a marker per location, and put into markers array.
+          var marker = new google.maps.Marker({
+           position: position,
+           title: title,
+           animation: google.maps.Animation.DROP,
+           id: i
+         });
+         // Push the marker to our array of markers.
+         markers.push(marker);
+         // Create an onclick event to open an infowindow at each marker.
+         marker.addListener('click', function() {
+           populateInfoWindow(this, largeInfowindow);
+         });
+       }
+       document.getElementById('show-listings').addEventListener('click', showListings);
+       document.getElementById('hide-listings').addEventListener('click', hideListings);
+     }
+     // This function populates the infowindow when the marker is clicked. We'll only allow
+     // one infowindow which will open at the marker that is clicked, and populate based
+     // on that markers position.
+     function populateInfoWindow(marker, infowindow) {
+       // Check to make sure the infowindow is not already opened on this marker.
+       if (infowindow.marker != marker) {
+         infowindow.marker = marker;
+         infowindow.setContent('<div>' + marker.title + '</div>');
+         infowindow.open(map, marker);
+         // Make sure the marker property is cleared if the infowindow is closed.
+         infowindow.addListener('closeclick', function() {
+           infowindow.marker = null;
+         });
+       }
+     }
+     // This function will loop through the markers array and display them all.
+     function showListings() {
+       var bounds = new google.maps.LatLngBounds();
+       // Extend the boundaries of the map for each marker and display the marker
+       for (var i = 0; i < markers.length; i++) {
+         markers[i].setMap(map);
+         bounds.extend(markers[i].position);
+       }
+       map.fitBounds(bounds);
+     }
+     // This function will loop through the listings and hide them all.
+     function hideListings() {
+       for (var i = 0; i < markers.length; i++) {
+         markers[i].setMap(null);
+       }
+     }
+   </script>
+   <script async defer
+     src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAiQUibtZZtp2HMDo3GcmfWxYS5E43QXU4&callback=initMap">
+   </script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ </body>
 </html>
