@@ -1,1 +1,1 @@
-web: python TempTracker/app.py
+web: python app.py
