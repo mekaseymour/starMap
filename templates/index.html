@@ -4,6 +4,10 @@ API Course, Lesson 1 -->
 <html>
  <head>
 
+   <title>StarMap</title>
+
+   <link rel='shortcut icon' type='image/icon' href='images/favicon.ico' />
+
    <!-- Latest compiled and minified CSS -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -23,7 +27,6 @@ API Course, Lesson 1 -->
      #title {
        text-align: left;
        font-family: 'Source Sans Pro', sans-serif;
-       font-weight: 200;
        font-size: 55px;
      }
      #map {
@@ -56,11 +59,13 @@ API Course, Lesson 1 -->
      p {
        font-family: 'Source Sans Pro', sans-serif;
        font-size: 16px;
+       font-weight: 200;
      }
 
      button {
        border-radius: 20px;
-       border: none;
+       border-color: black;
+       background-color: white;
      }
 
      /* The Modal (background) */
@@ -108,18 +113,18 @@ API Course, Lesson 1 -->
    <div id="main" class="container">
      <div class="row" id="options-box">
        <div class="col-md-12">
-         <h1 id="title">And a star is born...</h1>
+         <h1 id="title">A star is born...</h1>
          <p>have you ever wondered where stars come from?</p>
-         <p>wonder no longer.</p>
+         <p>stop wondering and do something</p>
        </div>
        <div class="col-md-12">
          <div id="inner">
-           <input id="show" type="button" value="Show">
-           <input id="hide" type="button" value="Hide ">
+           <input id="show" type="button" value="show all">
+           <input id="hide" type="button" value="hide all">
            <!-- trigger/open the modal
            <input id="filterBtn" type="button" value="Filter">
            -->
-           <button id="filterBtn">Filter</button>
+           <button id="filterBtn">filter</button>
          </div>
        </div>
      </div>
@@ -131,15 +136,16 @@ API Course, Lesson 1 -->
      <div class="modal-content">
        <span class="close">&times;</span>
        <form id="modalForm">
-         <input type="checkbox" name="musician" value="musician"><span id="text">&nbsp;&nbsp;&nbsp;musician</span><br>
-         <input type="checkbox" name="public figure" value="public figure"><span id="text">&nbsp;&nbsp;&nbsp;public figure</span><br>
-         <input type="checkbox" name="athlete" value="athlete"><span id="text">&nbsp;&nbsp;&nbsp;athlete</span><br>
-         <input type="checkbox" name="boss" value="boss"><span id="text">&nbsp;&nbsp;&nbsp;boss</span><br>
-         <input type="button" onclick="filterLocations()" value="enter"> 
+         <input type="checkbox" name="musicians" value="musicians"><span id="text">&nbsp;&nbsp;&nbsp;musician</span><br>
+         <input type="checkbox" name="public figures" value="public figures"><span id="text">&nbsp;&nbsp;&nbsp;public figure</span><br>
+         <input type="checkbox" name="athletes" value="athletes"><span id="text">&nbsp;&nbsp;&nbsp;athlete</span><br>
+         <input type="checkbox" name="bosses" value="bosses"><span id="text">&nbsp;&nbsp;&nbsp;boss</span><br>
+         <br>
+         <input type="button" onclick="filterLocations()" value="enter">
        </form>
      </div>
    </div>
-
+   <div><p id="test"></p></div>
     <div id="map"></div>
 
    <script>
@@ -156,12 +162,12 @@ API Course, Lesson 1 -->
        // These are the real estate listings that will be shown to the user.
        // Normally we'd have these in a database instead.
        var locations = [
-         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png', type: 'musician'},
-         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png', type: 'public figure'},
-         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musician'},
-         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figure'},
-         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athlete'},
-         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'boss'}
+         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png', type: 'musicians'},
+         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png', type: 'public figures'},
+         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musicians'},
+         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figures'},
+         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athletes'},
+         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses'}
        ];
        var largeInfowindow = new google.maps.InfoWindow();
        // The following group uses the location array to create an array of markers on initialize.
@@ -170,11 +176,13 @@ API Course, Lesson 1 -->
          var position = locations[i].location;
          var title = locations[i].title;
          var icon = locations[i].icon;
+         var type = locations[i].type;
          // Create a marker per location, and put into markers array.
           var marker = new google.maps.Marker({
            position: position,
            title: title,
            icon: icon,
+           type: type,
            animation: google.maps.Animation.DROP,
            id: i
          });
@@ -287,22 +295,25 @@ API Course, Lesson 1 -->
   }
 
   // MODAL LOGIC
+  // shows marker if cooresponding checkbox is checked
+  // hides marker otherwise
   function filterLocations() {
-    for(j = 0; j < modalForm.length; j++) {
-      var value = modalForm[j].value;
+    for(var j = 0; j < modalForm.length; j++) {
+      var value = modalForm[j].name;
       if(modalForm[j].type == 'checkbox') {
         if(modalForm[j].checked) {
-          for(var l in locations) {
-            if(locations.type==value) {
-              showListings(locations[l]);
+          for(var i = 0; i < markers.length; i++) {
+            if(markers[i].type==value) {
+              markers[i].setMap(map);
             }
             else {
-              hideListings(locations[l]);
+              markers[i].setMap(null);
             }
           }
         }
       }
     }
+    modal.style.display = "none";
 }
 
    </script>
