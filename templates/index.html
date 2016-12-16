@@ -114,7 +114,7 @@ API Course, Lesson 1 -->
    <div id="main" class="container">
      <div class="row" id="options-box">
        <div class="col-md-12">
-         <h1 id="title">Some stars are born...</h1>
+         <h1 id="title">Some stars are <b>born</b>.</h1>
          <p>have you ever wondered where stars come from?</p>
          <p>stop wondering and look with your eyes</p>
        </div>
@@ -137,16 +137,16 @@ API Course, Lesson 1 -->
      <div class="modal-content">
        <span class="close">&times;</span>
        <form id="modalForm">
-         <input type="checkbox" name="musicians" value="musicians"><span id="text">&nbsp;&nbsp;&nbsp;musician</span><br>
-         <input type="checkbox" name="public figures" value="public figures"><span id="text">&nbsp;&nbsp;&nbsp;public figure</span><br>
-         <input type="checkbox" name="athletes" value="athletes"><span id="text">&nbsp;&nbsp;&nbsp;athlete</span><br>
-         <input type="checkbox" name="bosses" value="bosses"><span id="text">&nbsp;&nbsp;&nbsp;boss</span><br>
+         <input type="checkbox" name="musicians" value="musicians"><span id="text">&nbsp;&nbsp;&nbsp;musicians</span><br>
+         <input type="checkbox" name="public figures" value="public figures"><span id="text">&nbsp;&nbsp;&nbsp;public figures</span><br>
+         <input type="checkbox" name="athletes" value="athletes"><span id="text">&nbsp;&nbsp;&nbsp;athletes</span><br>
+         <input type="checkbox" name="bosses" value="bosses"><span id="text">&nbsp;&nbsp;&nbsp;bosses</span><br>
          <br>
          <input type="button" onclick="filterLocations()" value="enter">
        </form>
      </div>
    </div>
-   <div><p id="test"></p></div>
+
     <div id="map"></div>
 
    <script>
@@ -169,7 +169,9 @@ API Course, Lesson 1 -->
          {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musicians', quote: '\"Haters are just confused admirers.\" - JB'},
          {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figures', quote: '\"So much history yet to be made.\" - MO'},
          {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athletes', quote: '\"I\'m still working out at my old high school.\" - LJ'},
-         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses', quote: '\"People love photos\" - MZ'}
+         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses', quote: '\"People love photos\" - MZ'},
+         {title: 'Nelson Mandela', location: {lat: -31.9407, lng: 28.5492}, icon: 'http://imageshack.com/a/img922/1301/EccoyD.png', type: 'public figures', quote: '\"It always seems impossible until it\'s done.\" - NM'},
+         {title: 'Cristiano Ronaldo', location: {lat: 39.3999, lng: -8.2245}, icon: 'http://imageshack.com/a/img922/5190/A1TYrh.png', type: 'athletes', quote: '\"I am not the humbles person in the world.\" - CR'}
        ];
        var largeInfowindow = new google.maps.InfoWindow();
        // The following group uses the location array to create an array of markers on initialize.
