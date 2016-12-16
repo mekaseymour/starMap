@@ -10,6 +10,9 @@ API Course, Lesson 1 -->
    <!-- Optional theme -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+   <!-- Google fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200" rel="stylesheet">
+
  <!-- styles put here, but you can include a CSS file and reference it instead! -->
    <style type="text/css">
      html, body { height: 100%; margin: 0; padding: 0; }
@@ -18,11 +21,14 @@ API Course, Lesson 1 -->
        width: 95%;
      }
      #title {
-       text-align: center;
+       text-align: left;
+       font-family: 'Source Sans Pro', sans-serif;
+       font-weight: 200;
+       font-size: 55px;
      }
      #map {
        height: 100%;
-       width: 95%;
+       width: 93%;
        margin-left: auto;
        margin-right: auto;
      }
@@ -31,24 +37,106 @@ API Course, Lesson 1 -->
        border: none;
      }
      #options-box {
-       padding: 15px;
+       padding-top: 7px;
+       padding-bottom: 15px;
+       margin-top: 15px;
      }
      #inner {
-       width: 50%;
+       width: 100%;
        margin: 0 auto;
+       padding-bottom: 15px;
+       padding-top: 10px;
      }
+
+     #text {
+       font-family: 'Source Sans Pro', sans-serif;
+       font-size: 20px;
+       font-weight: 200;
+     }
+     p {
+       font-family: 'Source Sans Pro', sans-serif;
+       font-size: 16px;
+     }
+
+     button {
+       border-radius: 20px;
+       border: none;
+     }
+
+     /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
    </style>
  </head>
- <body>
-   <div id="main">
+ <!-- onload calls the function to display custom map markers upon the page being loaded -->
+ <body onload="showListings()">
+   <div id="main" class="container">
      <div class="row" id="options-box">
-       <div class="col-md-12"><h1 id="title">Where stars are born</h1></div>
-       <div class="col-md-12" id="buttons-box">
+       <div class="col-md-12">
+         <h1 id="title">And a star is born...</h1>
+         <p>have you ever wondered where stars come from?</p>
+         <p>wonder no longer.</p>
+       </div>
+       <div class="col-md-12">
          <div id="inner">
            <input id="show" type="button" value="Show">
            <input id="hide" type="button" value="Hide ">
+           <!-- trigger/open the modal
+           <input id="filterBtn" type="button" value="Filter">
+           -->
+           <button id="filterBtn">Filter</button>
          </div>
        </div>
+     </div>
+   </div>
+
+   <!--the modal -->
+   <div id="filterModal" class="modal">
+     <!-- Modal content -->
+     <div class="modal-content">
+       <span class="close">&times;</span>
+       <form id="modalForm">
+         <input type="checkbox" name="musician" value="musician"><span id="text">&nbsp;&nbsp;&nbsp;musician</span><br>
+         <input type="checkbox" name="public figure" value="public figure"><span id="text">&nbsp;&nbsp;&nbsp;public figure</span><br>
+         <input type="checkbox" name="athlete" value="athlete"><span id="text">&nbsp;&nbsp;&nbsp;athlete</span><br>
+         <input type="checkbox" name="boss" value="boss"><span id="text">&nbsp;&nbsp;&nbsp;boss</span><br>
+         <input type="button" onclick="filterLocations()" value="enter"> 
+       </form>
      </div>
    </div>
 
@@ -61,19 +149,19 @@ API Course, Lesson 1 -->
      function initMap() {
        // Constructor creates a new map - only center and zoom are required.
        map = new google.maps.Map(document.getElementById('map'), {
-         center: {lat: 40.7413549, lng: -73.9980244},
-         zoom: 5,
+         center: {lat: 39.7392, lng: -104.9903},
+         zoom: 3,
          mapTypeControl: false
        });
        // These are the real estate listings that will be shown to the user.
        // Normally we'd have these in a database instead.
        var locations = [
-         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png'},
-         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png'},
-         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png'},
-         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png'},
-         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png'},
-         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png'}
+         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png', type: 'musician'},
+         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png', type: 'public figure'},
+         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musician'},
+         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figure'},
+         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athlete'},
+         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'boss'}
        ];
        var largeInfowindow = new google.maps.InfoWindow();
        // The following group uses the location array to create an array of markers on initialize.
@@ -169,6 +257,54 @@ API Course, Lesson 1 -->
        ]
      },
   ]
+
+  // THE MODAL
+
+  // get the modal
+  var modal = document.getElementById('filterModal');
+
+  // get the button that opens the modal
+  var btn = document.getElementById("filterBtn");
+
+  // get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // when the user clicks on the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  // when the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // when the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // MODAL LOGIC
+  function filterLocations() {
+    for(j = 0; j < modalForm.length; j++) {
+      var value = modalForm[j].value;
+      if(modalForm[j].type == 'checkbox') {
+        if(modalForm[j].checked) {
+          for(var l in locations) {
+            if(locations.type==value) {
+              showListings(locations[l]);
+            }
+            else {
+              hideListings(locations[l]);
+            }
+          }
+        }
+      }
+    }
+}
+
    </script>
    <script async defer
      src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAiQUibtZZtp2HMDo3GcmfWxYS5E43QXU4&callback=initMap">
