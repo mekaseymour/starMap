@@ -28,6 +28,7 @@ API Course, Lesson 1 -->
        text-align: left;
        font-family: 'Source Sans Pro', sans-serif;
        font-size: 55px;
+       padding-bottom: 10px;
      }
      #map {
        height: 100%;
@@ -113,9 +114,9 @@ API Course, Lesson 1 -->
    <div id="main" class="container">
      <div class="row" id="options-box">
        <div class="col-md-12">
-         <h1 id="title">A star is born...</h1>
+         <h1 id="title">Some stars are born...</h1>
          <p>have you ever wondered where stars come from?</p>
-         <p>stop wondering and do something</p>
+         <p>stop wondering and look with your eyes</p>
        </div>
        <div class="col-md-12">
          <div id="inner">
@@ -159,15 +160,16 @@ API Course, Lesson 1 -->
          zoom: 3,
          mapTypeControl: false
        });
+
        // These are the real estate listings that will be shown to the user.
        // Normally we'd have these in a database instead.
        var locations = [
-         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png', type: 'musicians'},
-         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png', type: 'public figures'},
-         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musicians'},
-         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figures'},
-         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athletes'},
-         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses'}
+         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png', type: 'musicians', quote: '\"I\'m a human being\" - B'},
+         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png', type: 'public figures', quote: '\"Just a Hawaii boy *wink*\" - BO'},
+         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musicians', quote: '\"Haters are just confused admirers.\" - JB'},
+         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figures', quote: '\"So much history yet to be made.\" - MO'},
+         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athletes', quote: '\"I\'m still working out at my old high school.\" - LJ'},
+         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses', quote: '\"People love photos\" - MZ'}
        ];
        var largeInfowindow = new google.maps.InfoWindow();
        // The following group uses the location array to create an array of markers on initialize.
@@ -177,12 +179,14 @@ API Course, Lesson 1 -->
          var title = locations[i].title;
          var icon = locations[i].icon;
          var type = locations[i].type;
+         var quote = locations[i].quote;
          // Create a marker per location, and put into markers array.
           var marker = new google.maps.Marker({
            position: position,
            title: title,
            icon: icon,
            type: type,
+           quote: quote,
            animation: google.maps.Animation.DROP,
            id: i
          });
@@ -203,7 +207,7 @@ API Course, Lesson 1 -->
        // Check to make sure the infowindow is not already opened on this marker.
        if (infowindow.marker != marker) {
          infowindow.marker = marker;
-         infowindow.setContent('<div>' + marker.title + '</div>');
+         infowindow.setContent('<div>' + marker.quote + '</div>');
          infowindow.open(map, marker);
          // Make sure the marker property is cleared if the infowindow is closed.
          infowindow.addListener('closeclick', function() {
@@ -248,7 +252,6 @@ API Course, Lesson 1 -->
      },
      {
        "featureType": "road",
-       "elementType": "labels",
        "stylers": [
          {
            "visibility": "off"
