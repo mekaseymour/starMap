@@ -31,7 +31,7 @@ API Course, Lesson 1 -->
        padding-bottom: 10px;
      }
      #map {
-       height: 100%;
+       height: 90%;
        width: 93%;
        margin-left: auto;
        margin-right: auto;
@@ -113,12 +113,12 @@ API Course, Lesson 1 -->
  <body onload="showListings()">
    <div id="main" class="container">
      <div class="row" id="options-box">
-       <div class="col-md-12">
+       <div class="col-xs-12">
          <h1 id="title">Some stars are <b>born</b>.</h1>
          <p>have you ever wondered where stars come from?</p>
          <p>stop wondering and look with your eyes</p>
        </div>
-       <div class="col-md-12">
+       <div class="col-xs-12">
          <div id="inner">
            <input id="show" type="button" value="show all">
            <input id="hide" type="button" value="hide all">
@@ -137,10 +137,11 @@ API Course, Lesson 1 -->
      <div class="modal-content">
        <span class="close">&times;</span>
        <form id="modalForm">
-         <input type="checkbox" name="musicians" value="musicians"><span id="text">&nbsp;&nbsp;&nbsp;musicians</span><br>
-         <input type="checkbox" name="public figures" value="public figures"><span id="text">&nbsp;&nbsp;&nbsp;public figures</span><br>
-         <input type="checkbox" name="athletes" value="athletes"><span id="text">&nbsp;&nbsp;&nbsp;athletes</span><br>
-         <input type="checkbox" name="bosses" value="bosses"><span id="text">&nbsp;&nbsp;&nbsp;bosses</span><br>
+         <input type="checkbox" checked name="musicians" value="musicians"><span id="text">&nbsp;&nbsp;&nbsp;musicians</span><br>
+         <input type="checkbox" checked name="public figures" value="public figures"><span id="text">&nbsp;&nbsp;&nbsp;public figures</span><br>
+         <input type="checkbox" checked name="athletes" value="athletes"><span id="text">&nbsp;&nbsp;&nbsp;athletes</span><br>
+         <input type="checkbox" checked name="big screens" value="big screens"><span id="text">&nbsp;&nbsp;&nbsp;big screens</span><br>
+         <input type="checkbox" checked name="bosses" value="bosses"><span id="text">&nbsp;&nbsp;&nbsp;bosses</span><br>
          <br>
          <input type="button" onclick="filterLocations()" value="enter">
        </form>
@@ -156,9 +157,45 @@ API Course, Lesson 1 -->
      function initMap() {
        // Constructor creates a new map - only center and zoom are required.
        map = new google.maps.Map(document.getElementById('map'), {
-         center: {lat: 39.7392, lng: -104.9903},
+         center: {lat: 37.8393, lng: -84.2700},
          zoom: 3,
-         mapTypeControl: false
+         mapTypeControl: false,
+         styles: [
+            {
+              "featureType": "administrative.neighborhood",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry.fill",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+         ]
        });
 
        // These are the real estate listings that will be shown to the user.
@@ -171,7 +208,12 @@ API Course, Lesson 1 -->
          {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athletes', quote: '\"I\'m still working out at my old high school.\" - LJ'},
          {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses', quote: '\"People love photos\" - MZ'},
          {title: 'Nelson Mandela', location: {lat: -31.9407, lng: 28.5492}, icon: 'http://imageshack.com/a/img922/1301/EccoyD.png', type: 'public figures', quote: '\"It always seems impossible until it\'s done.\" - NM'},
-         {title: 'Cristiano Ronaldo', location: {lat: 39.3999, lng: -8.2245}, icon: 'http://imageshack.com/a/img922/5190/A1TYrh.png', type: 'athletes', quote: '\"I am not the humbles person in the world.\" - CR'}
+         {title: 'Mindy Kaling', location: {lat: 42.3736, lng: -71.1097}, icon: 'http://imageshack.com/a/img922/9141/Pjgu1w.png', type: 'big screens', quote: '\"Fast food is hugely important in the life of a comedy writer.\" - MK'},
+         {title: 'Elon Musk', location: {lat: -25.7479, lng: 28.2293}, icon: 'http://imageshack.com/a/img921/1670/mksl0x.png', type: 'bosses', quote: '\"I would like to die on Mars.\" - EM'},
+         {title: 'Adele', location: {lat: 51.6050, lng: -0.0723}, icon: 'http://imageshack.com/a/img922/9144/MHMjP6.png', type: 'musicians', quote: '\"Hello, it\'s me..\" - A'},
+         {title: 'Ellen', location: {lat: 29.9841, lng: -90.1529}, icon: 'http://imageshack.com/a/img924/4341/Vji8QN.png', type: 'big screens', quote: '\"I still have the shirt I wore my first time on Johnny Carson\'s show.\" - E'},
+         {title: 'Neymar', location: {lat: -23.5213, lng: -46.1859}, icon: 'http://imageshack.com/a/img923/3561/RpPhHE.png', type: 'athletes', quote: '\"I was born to be happy not perfect.\" - N'},
+         {title: 'Yao Ming', location: {lat: 31.2304, lng: 121.4737}, icon: 'http://imageshack.com/a/img924/8461/cTuEvM.png', type: 'athletes', quote: '\"Friendship first, competition second.\" - YM'}
        ];
        var largeInfowindow = new google.maps.InfoWindow();
        // The following group uses the location array to create an array of markers on initialize.
@@ -223,9 +265,9 @@ API Course, Lesson 1 -->
        // Extend the boundaries of the map for each marker and display the marker
        for (var i = 0; i < markers.length; i++) {
          markers[i].setMap(map);
-         bounds.extend(markers[i].position);
+         //bounds.extend(markers[i].position);
        }
-       map.fitBounds(bounds);
+      // map.fitBounds(bounds);
      }
      // This function will loop through the listings and hide them all.
      function hideListings() {
@@ -233,43 +275,6 @@ API Course, Lesson 1 -->
          markers[i].setMap(null);
        }
      }
-
-    [
-     {
-       "featureType": "administrative.neighborhood",
-       "stylers": [
-         {
-           "visibility": "off"
-         }
-       ]
-     },
-     {
-       "featureType": "road.highway",
-       "elementType": "geometry.fill",
-       "stylers": [
-         {
-           "visibility": "off"
-         }
-       ]
-     },
-     {
-       "featureType": "road",
-       "stylers": [
-         {
-           "visibility": "off"
-         }
-       ]
-     },
-     {
-       "featureType": "water",
-       "elementType": "labels.text",
-       "stylers": [
-         {
-           "visibility": "off"
-         }
-       ]
-     },
-  ]
 
   // THE MODAL
 
@@ -303,23 +308,25 @@ API Course, Lesson 1 -->
   // shows marker if cooresponding checkbox is checked
   // hides marker otherwise
   function filterLocations() {
-    for(var j = 0; j < modalForm.length; j++) {
-      var value = modalForm[j].name;
-      if(modalForm[j].type == 'checkbox') {
-        if(modalForm[j].checked) {
-          for(var i = 0; i < markers.length; i++) {
-            if(markers[i].type==value) {
-              markers[i].setMap(map);
-            }
-            else {
-              markers[i].setMap(null);
-            }
-          }
-        }
-      }
-    }
+    var checkboxes = Array.from(modalForm); // HTMLElement
+    markers = Array.from(markers); // GoogleMapsGarbageMarker
+
+    var checkedCheckboxes = checkboxes.filter((checkbox) => checkbox.checked);
+
+    var categoriesToShow = checkedCheckboxes.map(function(checkbox) {
+      return checkbox.name;
+    });
+
+    var markersToDisplay = markers.filter((marker) => categoriesToShow.includes(marker.type));
+
+    markers.forEach((marker) => marker.setMap(null));
+
+    markersToDisplay.forEach(function(marker) {
+      marker.setMap(map);
+    });
+
     modal.style.display = "none";
-}
+  }
 
    </script>
    <script async defer
