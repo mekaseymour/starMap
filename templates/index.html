@@ -117,6 +117,9 @@ API Course, Lesson 1 -->
         text-decoration: none;
         cursor: pointer;
     }
+    #infoWindow {
+      font-size: 16px;
+    }
 
    </style>
  </head>
@@ -125,7 +128,8 @@ API Course, Lesson 1 -->
    <div id="main" class="container-fluid">
      <div class="row" id="options-box">
        <div class="col-xs-12">
-         <h1 id="title">Some stars are <b>born</b>.</h1>
+         <p id="subtitle">Some stars are made...</p>
+         <h1 id="title">Some are <b>born</b>.</h1>
          <p id="subtitle">have you ever wondered where stars come from?</p>
          <p id="subtitle">well stop wondering and look with your eyes</p>
        </div>
@@ -216,19 +220,20 @@ API Course, Lesson 1 -->
        // These are the real estate listings that will be shown to the user.
        // Normally we'd have these in a database instead.
        var locations = [
-         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/5817/sF5AMH.png', type: 'musicians', quote: '\"I\'m a human being\" - B'},
-         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img922/7335/ZLR7Ta.png', type: 'public figures', quote: '\"Just a Hawaii boy *wink*\" - BO'},
-         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img921/756/NMKBJp.png', type: 'musicians', quote: '\"Haters are just confused admirers.\" - JB'},
-         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img922/2444/r7onu3.png', type: 'public figures', quote: '\"So much history yet to be made.\" - MO'},
-         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img922/5833/WpMiTt.png', type: 'athletes', quote: '\"I\'m still working out at my old high school.\" - LJ'},
-         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img921/9193/3Mzn4D.png', type: 'bosses', quote: '\"People love photos\" - MZ'},
-         {title: 'Nelson Mandela', location: {lat: -31.9407, lng: 28.5492}, icon: 'http://imageshack.com/a/img922/1301/EccoyD.png', type: 'public figures', quote: '\"It always seems impossible until it\'s done.\" - NM'},
-         {title: 'Mindy Kaling', location: {lat: 42.3736, lng: -71.1097}, icon: 'http://imageshack.com/a/img922/9141/Pjgu1w.png', type: 'big screens', quote: '\"Fast food is hugely important in the life of a comedy writer.\" - MK'},
-         {title: 'Elon Musk', location: {lat: -25.7479, lng: 28.2293}, icon: 'http://imageshack.com/a/img921/1670/mksl0x.png', type: 'bosses', quote: '\"I would like to die on Mars.\" - EM'},
-         {title: 'Adele', location: {lat: 51.6050, lng: -0.0723}, icon: 'http://imageshack.com/a/img922/9144/MHMjP6.png', type: 'musicians', quote: '\"Hello, it\'s me..\" - A'},
-         {title: 'Ellen', location: {lat: 29.9841, lng: -90.1529}, icon: 'http://imageshack.com/a/img924/4341/Vji8QN.png', type: 'big screens', quote: '\"I still have the shirt I wore my first time on Johnny Carson\'s show.\" - E'},
-         {title: 'Neymar', location: {lat: -23.5213, lng: -46.1859}, icon: 'http://imageshack.com/a/img923/3561/RpPhHE.png', type: 'athletes', quote: '\"I was born to be happy not perfect.\" - N'},
-         {title: 'Yao Ming', location: {lat: 31.2304, lng: 121.4737}, icon: 'http://imageshack.com/a/img924/8461/cTuEvM.png', type: 'athletes', quote: '\"Friendship first, competition second.\" - YM'}
+         {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/3972/FWNstD.png', type: 'musicians', quote: '\"I\'m a human being\" - B'},
+         {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img924/1223/ci0iYg.png', type: 'public figures', quote: '\"Just a Hawaii boy *wink*\" - BO'},
+         {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img924/6798/vWIELU.png', type: 'musicians', quote: '\"Haters are just confused admirers.\" - JB'},
+         {title: 'Michelle Obama', location: {lat: 41.8781, lng: -87.6298}, icon: 'http://imageshack.com/a/img924/7969/trSAlA.png', type: 'public figures', quote: '\"So much history yet to be made.\" - MO'},
+         {title: 'Lebron James', location: {lat: 41.0814, lng: -81.5190}, icon: 'http://imageshack.com/a/img923/6185/tf3EF5.png', type: 'athletes', quote: '\"I\'m still working out at my old high school.\" - LJ'},
+         {title: 'Mark Zuckerberg', location: {lat: 41.0340, lng: -73.7629}, icon: 'http://imageshack.com/a/img923/7095/HAMELW.png', type: 'bosses', quote: '\"People love photos\" - MZ'},
+         {title: 'Nelson Mandela', location: {lat: -31.9407, lng: 28.5492}, icon: 'http://imageshack.com/a/img921/3872/B41J07.png', type: 'public figures', quote: '\"It always seems impossible until it\'s done.\" - NM'},
+         {title: 'Mindy Kaling', location: {lat: 42.3736, lng: -71.1097}, icon: 'http://imageshack.com/a/img922/7094/SvKwiq.png', type: 'big screens', quote: '\"Fast food is hugely important in the life of a comedy writer.\" - MK'},
+         {title: 'Elon Musk', location: {lat: -25.7479, lng: 28.2293}, icon: 'http://imageshack.com/a/img922/2827/P14l9H.png', type: 'bosses', quote: '\"I would like to die on Mars.\" - EM'},
+         {title: 'Adele', location: {lat: 51.6050, lng: -0.0723}, icon: 'http://imageshack.com/a/img924/9344/WJQPHs.png', type: 'musicians', quote: '\"Hello, it\'s me..\" - A'},
+         {title: 'Ellen', location: {lat: 29.9841, lng: -90.1529}, icon: 'http://imageshack.com/a/img922/773/De4uHw.png', type: 'big screens', quote: '\"I still have the shirt I wore my first time on Johnny Carson\'s show.\" - E'},
+         {title: 'Neymar', location: {lat: -23.5213, lng: -46.1859}, icon: 'http://imageshack.com/a/img923/603/3H6uHv.png', type: 'athletes', quote: '\"I was born to be happy not perfect.\" - N'},
+         {title: 'Yao Ming', location: {lat: 31.2304, lng: 121.4737}, icon: 'http://imageshack.com/a/img923/3452/T3eRur.png', type: 'athletes', quote: '\"Friendship first, competition second.\" - YM'},
+         {title: 'Malala', location: {lat: 34.7717, lng: 72.3602}, icon: 'http://imageshack.com/a/img921/5057/qg8KNb.png', type: 'public figures', quote: '\"All I want is an education, and I am afraid of no one.\" - M'}
        ];
        var largeInfowindow = new google.maps.InfoWindow();
        // The following group uses the location array to create an array of markers on initialize.
@@ -266,7 +271,7 @@ API Course, Lesson 1 -->
        // Check to make sure the infowindow is not already opened on this marker.
        if (infowindow.marker != marker) {
          infowindow.marker = marker;
-         infowindow.setContent('<div>' + marker.quote + '</div>');
+         infowindow.setContent('<div id="infoWindow">' + marker.quote + '</div>');
          infowindow.open(map, marker);
          // Make sure the marker property is cleared if the infowindow is closed.
          infowindow.addListener('closeclick', function() {
