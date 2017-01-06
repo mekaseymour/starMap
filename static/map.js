@@ -49,7 +49,7 @@ function initMap() {
 
   // These are the real estate listings that will be shown to the user.
   // Normally we'd have these in a database instead.
-  var locations = [
+/*  var locations = [
     {title: 'Beyonce', location: {lat: 29.7604, lng: -95.3698}, icon: 'http://imageshack.com/a/img924/3972/FWNstD.png', type: 'musicians', quote: '\"I\'m a human being\" - B'},
     {title: 'Barack Obama', location: {lat: 21.3069, lng: -157.8583}, icon: 'http://imageshack.com/a/img924/1223/ci0iYg.png', type: 'public figures', quote: '\"Just a Hawaii boy *wink*\" - BO'},
     {title: 'Justin Bieber', location: {lat: 42.9870, lng: -81.2432}, icon: 'http://imageshack.com/a/img924/6798/vWIELU.png', type: 'musicians', quote: '\"Haters are just confused admirers.\" - JB'},
@@ -65,15 +65,17 @@ function initMap() {
     {title: 'Yao Ming', location: {lat: 31.2304, lng: 121.4737}, icon: 'http://imageshack.com/a/img923/3452/T3eRur.png', type: 'athletes', quote: '\"Friendship first, competition second.\" - YM'},
     {title: 'Malala', location: {lat: 34.7717, lng: 72.3602}, icon: 'http://imageshack.com/a/img921/5057/qg8KNb.png', type: 'public figures', quote: '\"All I want is an education, and I am afraid of no one.\" - M'}
   ];
+  */
   var largeInfowindow = new google.maps.InfoWindow();
   // The following group uses the location array to create an array of markers on initialize.
-  for (var i = 0; i < locations.length; i++) {
+  for (var i = 0; i < window.locations.length; i++) {
     // Get the position from the location array.
-    var position = locations[i].location;
-    var title = locations[i].title;
-    var icon = locations[i].icon;
-    var type = locations[i].type;
-    var quote = locations[i].quote;
+    var position = {lat:window.locations[i].lat, lng:window.locations[i].lng};
+    var title = window.locations[i].title;
+    var icon = window.locations[i].icon;
+    var type = window.locations[i].type;
+    var quote = window.locations[i].quote;
+    console.log(title);
     // Create a marker per location, and put into markers array.
      var marker = new google.maps.Marker({
       position: position,
